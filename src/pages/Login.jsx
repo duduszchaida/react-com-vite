@@ -18,13 +18,33 @@ function Login() {
   const handleForgotPassword = () => {
     navigate("/forgot-password");
   };
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
+  const handleLogin = async (event) => {
+      event.preventDefault();
+
+      try {
+          const response = await axios.post('/api/auth/login', {
+              username,
+              password
+          });
+
+          if (response.status === 200) {
+         
+              window.location.href = '/home';
+          }
+      } catch (error) {
+          setError('Invalid username or password');
+      }
+  };
   return (
     <div className="grid">
       <div className="hidden xl:block xl:col-7 img-login">
         <img className="h-full" src="vedoble-background.png" alt="Background" />
       </div>
-
+      <form onSubmit={handleLogin}>
       <div className="col-12 xl:col-5 py-7 px-5 xl:px-8 bg-white">
         <div className="text-center mt-6 mb-5">
           <img src="logo-vedoble.png" alt="Logo" />
@@ -40,6 +60,7 @@ function Login() {
           type="text"
           placeholder="Email address"
           className="w-full md:max-w-30rem mb-5"
+          onChange={(e) => setUsername(e.target.value)}
           style={{ padding: "1rem" }}
         />
 
@@ -57,6 +78,7 @@ function Login() {
           inputClassName="w-full p-3 md:max-w-30rem"
           feedback={false}
           tabIndex={1}
+          onChange={(e) => setPassword(e.target.value)}
         ></Password>
 
         <div className="align-items-center text-center mb-5 gap-5">
@@ -68,10 +90,12 @@ function Login() {
             Forgot password?
           </a>
         </div>
-        <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleSignIn}></Button>
+        <Button label="Sign In" className="w-full p-3 text-xl" type="submit"></Button>
       </div>
+      </form>
     </div>
   );
 }
 
 export default Login;
+

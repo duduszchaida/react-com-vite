@@ -12,7 +12,9 @@ function ForgotPassword() {
   const handleLogin = () => {
     navigate("/login");
   };
-
+  const handleChangePassword = () => {
+    navigate("/change-password");
+  };
   return (
     <div className="flex align-items-center justify-content-center">
       <div className="surface-card pb-7 p-8 shadow-2 border-round w-full lg:w-5">
@@ -28,7 +30,7 @@ function ForgotPassword() {
           <InputText id="email" type="text" placeholder="Email address" className="w-full mb-3" />
 
           <div className="mt-4 flex justify-content-center">
-            <Button label="Enviar email" icon="pi pi-user" className=""/>
+            <Button label="Enviar email" icon="pi pi-user" onClick={handleChangePassword} className=""/>
           </div>
         </div>
       </div>
